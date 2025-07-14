@@ -11,6 +11,14 @@ This initial version lays the groundwork for the HamsterHeist experience, focusi
 *   **Keyboard-Based Hamster Control & Simple Physics**: Players can directly control the hamster-bot using keyboard arrow keys. A rudimentary physics engine handles basic movement (velocity, position updates) and implements Axis-Aligned Bounding Box (AABB) collision detection to prevent the hamster-bot from passing through maze walls.
 *   **Win Condition and Basic UI**: The primary game objective is implemented. The game detects when the hamster-bot collides with the golden sunflower seed. Upon a successful "heist," the game state updates to "won," pausing the game and displaying a simple "You Win!" message directly over the canvas.
 
+## Features (Version 2)
+
+Building upon the foundation, Version 2 introduces key enhancements for strategic gameplay, persistence, and competitive multiplayer:
+
+*   **The Heist Objective: Golden Sunflower Seed & Target Sensor**: Introduces the primary game objective: a 'Golden Sunflower Seed' placed at the end of the maze. To facilitate goal-oriented programming, bots are upgraded with a new 'Target Sensor'. This sensor provides the AI with the distance and angle to the seed via the API (e.g., `sensors.getTargetData()`), shifting the challenge from pure navigation to strategic pathfinding. The game loop is updated to detect when a bot reaches the seed, stopping the timer and marking the run as a success.
+*   **Code Persistence with Backend Storage**: Players can now save their hard-earned bot AI scripts to a server. This feature introduces a backend with a simple database to store user code. The coding UI panel is enhanced with 'Save' and 'Load' buttons, allowing players to create, name, and retrieve their scripts across sessions. This encourages the development of more complex and refined bot logic without the fear of losing work on a browser refresh.
+*   **Asynchronous Multiplayer 'Ghost' Racing**: Introduces a competitive asynchronous multiplayer mode. When a player successfully completes a heist, their bot's entire run (as a sequence of position/rotation data over time) is saved. Players can then choose to race against a 'ghost' of another player's successful run. The ghost bot appears in the maze as a visible, physical object, replaying its recorded path. This requires updating the physics engine to handle bot-on-bot collisions, turning other players' ghosts into dynamic, unpredictable obstacles.
+
 ## Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
@@ -43,7 +51,7 @@ Ensure you have the following installed:
     ```bash
     npm start
     ```
-    This command executes the `start` script defined in `package.json`, which typically runs the Node.js backend server. You should see output in your console indicating that the server has started and is listening on a specific port.
+    This command executes the `start` script defined in `package.json`, which runs the Node.js backend server. You should see output in your console indicating that the server has started and is listening on a specific port.
 
 2.  **Open in your browser**:
     Once the server is running, open your web browser and navigate to:
@@ -57,16 +65,20 @@ Ensure you have the following installed:
 *   Navigate your hamster-bot through the maze, avoiding obstacles.
 *   Your primary objective is to reach and collide with the **golden sunflower seed**.
 *   Upon successfully collecting the seed, a "You Win!" message will appear, and the game will pause.
+*   **Program your bot**: Utilize the in-game coding UI to write JavaScript logic for your bot. Use the new `sensors.getTargetData()` API to help your bot find the golden sunflower seed.
+*   **Save and Load Scripts**: Use the 'Save' and 'Load' buttons in the coding UI to manage your bot AI scripts.
+*   **Race against Ghosts**: After completing a heist, you can race against the recorded "ghosts" of other players' successful runs. These ghosts will appear as physical obstacles in the maze.
 
 ## Technologies Used
 
 *   **Backend**:
     *   Node.js
-    *   Express.js (for serving web content)
+    *   Express.js (for serving web content and API endpoints)
 *   **Frontend**:
     *   HTML5 Canvas (for game rendering)
     *   JavaScript (ES6+)
     *   CSS3
+    *   Matter.js (for physics simulation)
 
 ## Future Plans
 
