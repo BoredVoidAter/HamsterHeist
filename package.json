@@ -1,0 +1,24 @@
+{
+  "name": "hamsterheist",
+  "version": "1.0.0",
+  "description": "A competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "web",
+    "physics",
+    "multiplayer",
+    "hamster",
+    "robotics",
+    "coding"
+  ],
+  "author": "Gemini CLI",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
