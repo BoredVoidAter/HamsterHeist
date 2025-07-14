@@ -1,6 +1,6 @@
 # HamsterHeist
 
-HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun.
+HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. Players design their bot's physical chassis (affecting weight and traction) and then write simple, block-based or JavaScript code to control its logic and sensors for navigating traps, other bots, and dynamic obstacles. The core challenge lies in creating an AI that can adapt to changing environments and outsmart other players' creations in real-time, multiplayer heists. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun.
 
 ## Features (Version 1)
 
@@ -19,73 +19,12 @@ Building upon the foundation, Version 2 introduces key enhancements for strategi
 *   **Code Persistence with Backend Storage**: Players can now save their hard-earned bot AI scripts to a server. This feature introduces a backend with a simple database to store user code. The coding UI panel is enhanced with 'Save' and 'Load' buttons, allowing players to create, name, and retrieve their scripts across sessions. This encourages the development of more complex and refined bot logic without the fear of losing work on a browser refresh.
 *   **Asynchronous Multiplayer 'Ghost' Racing**: Introduces a competitive asynchronous multiplayer mode. When a player successfully completes a heist, their bot's entire run (as a sequence of position/rotation data over time) is saved. Players can then choose to race against a 'ghost' of another player's successful run. The ghost bot appears in the maze as a visible, physical object, replaying its recorded path. This requires updating the physics engine to handle bot-on-bot collisions, turning other players' ghosts into dynamic, unpredictable obstacles.
 
-## Getting Started
-
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
-
-### Prerequisites
-
-Ensure you have the following installed:
-
-*   **Node.js**: (LTS version recommended)
-*   **npm**: (Node Package Manager, which comes bundled with Node.js)
-
-### Installation
-
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/your-username/HamsterHeist.git
-    cd HamsterHeist
-    ```
-    *(Note: Replace `your-username` with the actual GitHub username if this project were hosted.)*
-
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-    This command reads the `package.json` file and installs all necessary server-side and client-side dependencies.
-
-### Running the Game
-
-1.  **Start the development server**:
-    ```bash
-    npm start
-    ```
-    This command executes the `start` script defined in `package.json`, which runs the Node.js backend server. You should see output in your console indicating that the server has started and is listening on a specific port.
-
-2.  **Open in your browser**:
-    Once the server is running, open your web browser and navigate to:
-    `http://localhost:3000`
-
-    *(Note: If port 3000 is already in use on your system, the server might automatically select an alternative port, such as `3001`. Check your console output for the exact URL.)*
-
-## How to Play
-
-*   Use the **arrow keys** (Up, Down, Left, Right) to control your hamster-bot's movement.
-*   Navigate your hamster-bot through the maze, avoiding obstacles.
-*   Your primary objective is to reach and collide with the **golden sunflower seed**.
-*   Upon successfully collecting the seed, a "You Win!" message will appear, and the game will pause.
-*   **Program your bot**: Utilize the in-game coding UI to write JavaScript logic for your bot. Use the new `sensors.getTargetData()` API to help your bot find the golden sunflower seed.
-*   **Save and Load Scripts**: Use the 'Save' and 'Load' buttons in the coding UI to manage your bot AI scripts.
-*   **Race against Ghosts**: After completing a heist, you can race against the recorded "ghosts" of other players' successful runs. These ghosts will appear as physical obstacles in the maze.
-
-## Technologies Used
-
-*   **Backend**:
-    *   Node.js
-    *   Express.js (for serving web content and API endpoints)
-*   **Frontend**:
-    *   HTML5 Canvas (for game rendering)
-    *   JavaScript (ES6+)
-    *   CSS3
-    *   Matter.js (for physics simulation)
-
 ## Features (Version 3)
 
 Version 3 introduces significant new gameplay mechanics, focusing on player progression and dynamic environments:
 
-*   **The Workshop & Swappable Bot Modules**: Players earn 'Scrap' by completing heists, which can be spent in a new 'Workshop' UI. Here, they can unlock and equip persistent modules for their hamster-bot, offering new active or passive abilities (e.g., 'Grappling Hook', 'High-Traction Treads'). This adds a 'bot-building' meta-game, requiring players to synchronize their bot's hardware with its AI software.
-*   **Dynamic Environmental Hazards & Proximity Sensor**: The maze now features dynamic hazards like 'Piston Crushers' and 'Floor Vents'. To counter these, a new 'Proximity Sensor' is added to the bot's API (`sensors.getProximityData()`), allowing the AI to detect the type, distance, and state of the nearest object in its forward path. This forces players to evolve their code to reactive, timing-based logic.
+*   **The Workshop & Swappable Bot Modules**: Introduces a player progression system where completing heists earns a currency called 'Scrap'. Players can spend Scrap in a new 'Workshop' UI to unlock and equip persistent modules for their hamster-bot. These modules provide new active or passive abilities, creating strategic trade-offs. Examples include a 'Grappling Hook' for new movement options (activated via `actions.useModule()`), or 'High-Traction Treads' that passively increase grip at the cost of speed. This adds a 'bot-building' meta-game, requiring players to synchronize their bot's hardware with its AI software.
+*   **Dynamic Environmental Hazards & Proximity Sensor**: Upgrades the maze from a static layout to a dynamic environment filled with new hazards. This includes traps like 'Piston Crushers' that activate on a timer and 'Floor Vents' that periodically release a blast of air, pushing bots off course. To counteract these, a new 'Proximity Sensor' is added to the bot's API. The `sensors.getProximityData()` function allows the AI to detect the type, distance, and state (e.g., active/inactive) of the nearest object in its forward path, forcing players to evolve their code from simple pathfinding to reactive, timing-based logic.
 
 ## Getting Started
 
@@ -147,10 +86,10 @@ Ensure you have the following installed:
 *   Navigate your hamster-bot through the maze, avoiding obstacles.
 *   Your primary objective is to reach and collide with the **golden sunflower seed**.
 *   Upon successfully collecting the seed, a "You Win!" message will appear, and the game will pause.
-*   **Program your bot**: Utilize the in-game coding UI to write JavaScript logic for your bot. Use the new `sensors.getTargetData()` API to help your bot find the golden sunflower seed.
+*   **Program your bot**: Utilize the in-game coding UI to write JavaScript logic for your bot. Use the `sensors.getTargetData()` API to help your bot find the golden sunflower seed, and the new `sensors.getProximityData()` for reactive navigation around hazards.
 *   **Save and Load Scripts**: Use the 'Save' and 'Load' buttons in the coding UI to manage your bot AI scripts.
 *   **Race against Ghosts**: After completing a heist, you can race against the recorded "ghosts" of other players' successful runs. These ghosts will appear as physical obstacles in the maze.
-*   **Workshop**: Earn 'Scrap' to buy and equip new modules for your bot, enhancing its abilities.
+*   **Workshop**: Earn 'Scrap' by completing heists and spend it in the Workshop to unlock and equip new modules for your bot, enhancing its abilities. Activate active modules using `actions.useModule()`.
 
 ## Technologies Used
 
