@@ -80,13 +80,98 @@ Ensure you have the following installed:
     *   CSS3
     *   Matter.js (for physics simulation)
 
+## Features (Version 3)
+
+Version 3 introduces significant new gameplay mechanics, focusing on player progression and dynamic environments:
+
+*   **The Workshop & Swappable Bot Modules**: Players earn 'Scrap' by completing heists, which can be spent in a new 'Workshop' UI. Here, they can unlock and equip persistent modules for their hamster-bot, offering new active or passive abilities (e.g., 'Grappling Hook', 'High-Traction Treads'). This adds a 'bot-building' meta-game, requiring players to synchronize their bot's hardware with its AI software.
+*   **Dynamic Environmental Hazards & Proximity Sensor**: The maze now features dynamic hazards like 'Piston Crushers' and 'Floor Vents'. To counter these, a new 'Proximity Sensor' is added to the bot's API (`sensors.getProximityData()`), allowing the AI to detect the type, distance, and state of the nearest object in its forward path. This forces players to evolve their code to reactive, timing-based logic.
+
+## Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+*   **Node.js**: (LTS version recommended)
+*   **npm**: (Node Package Manager, which comes bundled with Node.js)
+*   **Python 3**: (For the Workshop backend)
+*   **pip**: (Python Package Installer, which comes bundled with Python)
+
+### Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/HamsterHeist.git
+    cd HamsterHeist
+    ```
+    *(Note: Replace `your-username` with the actual GitHub username if this project were hosted.)*
+
+2.  **Install Node.js dependencies**:
+    ```bash
+    npm install
+    ```
+    This command reads the `package.json` file and installs all necessary server-side and client-side dependencies.
+
+3.  **Install Python dependencies**:
+    ```bash
+    pip install Flask SQLAlchemy
+    ```
+
+### Running the Game
+
+1.  **Start the Node.js development server**:
+    ```bash
+    npm start
+    ```
+    This command executes the `start` script defined in `package.json`, which runs the Node.js backend server. You should see output in your console indicating that the server has started and is listening on a specific port.
+
+2.  **Start the Python Workshop backend**:
+    Open a new terminal window and navigate to the project root directory. Then run:
+    ```bash
+    python backend/routes/workshop_api.py
+    ```
+    *(Note: This is a simplified way to run the Flask app for development. For production, you would use a WSGI server like Gunicorn or uWSGI.)*
+
+3.  **Open in your browser**:
+    Once both servers are running, open your web browser and navigate to:
+    `http://localhost:3000`
+
+    *(Note: If port 3000 is already in use on your system, the server might automatically select an alternative port, such as `3001`. Check your console output for the exact URL.)*
+
+## How to Play
+
+*   Use the **arrow keys** (Up, Down, Left, Right) to control your hamster-bot's movement.
+*   Navigate your hamster-bot through the maze, avoiding obstacles.
+*   Your primary objective is to reach and collide with the **golden sunflower seed**.
+*   Upon successfully collecting the seed, a "You Win!" message will appear, and the game will pause.
+*   **Program your bot**: Utilize the in-game coding UI to write JavaScript logic for your bot. Use the new `sensors.getTargetData()` API to help your bot find the golden sunflower seed.
+*   **Save and Load Scripts**: Use the 'Save' and 'Load' buttons in the coding UI to manage your bot AI scripts.
+*   **Race against Ghosts**: After completing a heist, you can race against the recorded "ghosts" of other players' successful runs. These ghosts will appear as physical obstacles in the maze.
+*   **Workshop**: Earn 'Scrap' to buy and equip new modules for your bot, enhancing its abilities.
+
+## Technologies Used
+
+*   **Backend**:
+    *   Node.js
+    *   Express.js (for serving web content and API endpoints)
+    *   Python (for Workshop backend)
+    *   Flask (for Workshop backend)
+    *   SQLAlchemy (for Workshop backend ORM)
+*   **Frontend**:
+    *   HTML5 Canvas (for game rendering)
+    *   JavaScript (ES6+)
+    *   CSS3
+    *   Matter.js (for physics simulation)
+
 ## Future Plans
 
 HamsterHeist is planned to evolve with exciting new features:
 
 *   Integration of a more robust physics engine (e.g., `matter.js`).
 *   Development of a programmable hamster-bot AI, allowing players to write logic using block-based or JavaScript coding.
-*   Introduction of dynamic obstacles, traps, and interactive maze elements.
 *   Implementation of real-time multiplayer functionality for competitive play.
 *   Extensive customization options for bot chassis design and sensor integration.
 

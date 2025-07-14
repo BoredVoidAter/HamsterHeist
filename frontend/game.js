@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = new InputHandler();
     const gameUI = new GameUI();
     const entityManager = new EntityManager();
+    const physicsEngine = new PhysicsEngine();
 
     const initialHamsterX = 50;
     const initialHamsterY = 50;
@@ -25,23 +26,37 @@ document.addEventListener('DOMContentLoaded', () => {
         height: 40 // for AABB collision
     };
 
-    const maze = [
-        // Outer walls
-        { x: 0, y: 0, width: canvas.width, height: 10 },
-        { x: 0, y: canvas.height - 10, width: canvas.width, height: 10 },
-        { x: 0, y: 0, width: 10, height: canvas.height },
-        { x: canvas.width - 10, y: 0, width: 10, height: canvas.height },
+    let maze = [];
+    let hazards = [];
 
-        // Inner maze walls
-        { x: 100, y: 100, width: 10, height: 200 },
-        { x: 100, y: 300, width: 200, height: 10 },
-        { x: 300, y: 100, width: 10, height: 200 },
-        { x: 200, y: 400, width: 200, height: 10 },
-        { x: 400, y: 200, width: 10, height: 200 },
-        { x: 500, y: 100, width: 10, height: 200 },
-        { x: 500, y: 300, width: 200, height: 10 },
-        { x: 600, y: 400, width: 10, height: 200 }
-    ];
+    // Load level configuration
+    fetch('./assets/levels/level_config.json')
+        .then(response => response.json())
+        .then(data => {
+            const levelData = data.level1; // Assuming we load level1 for now
+            maze = levelData.maze.map((row, rIdx) => 
+                row.split('').map((cell, cIdx) => {
+                    if (cell === 'X') {
+                        return { x: cIdx * 50, y: rIdx * 50, width: 50, height: 50 }; // Assuming 50x50 grid cells
+                    }
+                    return null;
+                }).filter(Boolean)
+            ).flat();
+            hazards = levelData.hazards;
+
+            hamsterBot.x = levelData.start_position.x * 50; // Adjust for grid size
+            hamsterBot.y = levelData.start_position.y * 50;
+
+            sunflowerSeed.x = levelData.seed_position.x * 50;
+            sunflowerSeed.y = levelData.seed_position.y * 50;
+
+            // Add maze and hazards to physics engine
+            physicsEngine.addMaze(maze.map(wall => Bodies.rectangle(wall.x + wall.width / 2, wall.y + wall.height / 2, wall.width, wall.height, { isStatic: true })));
+            hazards.forEach(hazard => physicsEngine.addHazard(hazard));
+
+            requestAnimationFrame(gameLoop);
+        })
+        .catch(error => console.error('Error loading level config:', error));
 
     let gameWon = false;
     let startTime = performance.now();
@@ -77,15 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update bot (AI will eventually go here)
         hamsterBot.update(deltaTime);
 
-        // Apply Physics
-        Physics.applyMovement(hamsterBot, deltaTime);
-
-        // Collision with maze walls
-        maze.forEach(wall => {
-            if (Physics.checkCollision(hamsterBot, wall)) {
-                Physics.resolveCollision(hamsterBot, wall);
-            }
-        });
+        // Update physics engine
+        physicsEngine.update(deltaTime);
 
         // Collision with sunflower seed
         if (Physics.checkCollision(hamsterBot, sunflowerSeed)) {
@@ -96,16 +104,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render
         renderer.clear();
         renderer.drawMaze(maze, 10, '#555');
+        hazards.forEach(hazard => renderer.drawHazard(hazard, 'red')); // Draw hazards
         renderer.drawHamster(hamsterBot, 'orange');
         renderer.drawSunflowerSeed(sunflowerSeed, 'yellow');
 
         requestAnimationFrame(gameLoop);
     }
 
-    requestAnimationFrame(gameLoop);
+    // Initial call to start the game loop is now inside the fetch callback
 });
 
 // Import statements for new classes
 import { EntityManager } from './src/game/EntityManager.js';
 import { Bot } from './src/game/Bot.js';
 import { GameUI } from './src/game/GameUI.js';
+import PhysicsEngine from './src/game/physics_engine.js';
+import sensors from './src/game/sensor_suite.js';
+import actions from './src/game/bot_actions.js';

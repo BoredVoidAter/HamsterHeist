@@ -1,0 +1,32 @@
+
+{
+  "level1": {
+    "maze": [
+      "XXXXXXXXXXXX",
+      "X          X",
+      "X  X  X  X X",
+      "X X X X X  X",
+      "X          X",
+      "X  X  X  X X",
+      "X X X X X  X",
+      "X          X",
+      "XXXXXXXXXXXX"
+    ],
+    "start_position": {"x": 1.5, "y": 1.5},
+    "seed_position": {"x": 10.5, "y": 7.5},
+    "hazards": [
+      {
+        "type": "Piston Crusher",
+        "position": {"x": 3, "y": 4},
+        "size": {"width": 1, "height": 2},
+        "activation_interval": 5000, "duration": 2000
+      },
+      {
+        "type": "Floor Vent",
+        "position": {"x": 7, "y": 2},
+        "size": {"width": 2, "height": 1},
+        "blast_strength": 0.5, "activation_interval": 3000, "duration": 1000
+      }
+    ]
+  }
+}

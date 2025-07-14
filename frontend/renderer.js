@@ -26,6 +26,12 @@ class Renderer {
         });
     }
 
+    drawHazard(hazard, color) {
+        this.drawRect(hazard.position.x, hazard.position.y, hazard.size.width, hazard.size.height, color);
+        // You might want to add more sophisticated rendering for different hazard types
+        // e.g., for Piston Crushers, draw a different shape or add animation.
+    }
+
     drawHamster(hamster, color) {
         this.drawCircle(hamster.x, hamster.y, hamster.radius, color);
     }
