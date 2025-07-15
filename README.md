@@ -1,51 +1,30 @@
 # HamsterHeist
 
-HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. Design your bot's physical chassis and write simple, block-based or JavaScript code to control its logic and sensors for navigating traps, other bots, and dynamic obstacles. The core challenge lies in creating an AI that can adapt to changing environments and outsmart other players' creations in real-time, multiplayer heists. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun!
-
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running the Game](#running-the-game)
-- [Gameplay](#gameplay)
-- [Bot Programming](#bot-programming)
-- [Contributing](#contributing)
-- [License](#license)
+HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun.
 
 ## Features
 
 ### Core Gameplay
+Players design their bot's physical chassis (affecting weight and traction) and then write simple, block-based or JavaScript code to control its logic and sensors for navigating traps, other bots, and dynamic obstacles. The core challenge lies in creating an AI that can adapt to changing environments and outsmart other players' creations in real-time, multiplayer heists.
 
-- **Physics-Based Movement**: Realistic bot movement and interactions powered by a robust physics engine.
-- **Dynamic Mazes**: Procedurally generated mazes ensure every heist is a unique challenge.
-- **Strategic Obstacles**: Navigate traps, dynamic barriers, and environmental hazards.
-- **Multiplayer Heists**: Compete against other players' bots in real-time.
+### Dynamic Maze Events (New in v7)
+During a heist, random global events can trigger, altering the rules of the maze for a short period. This forces players to write more robust, adaptive AI that can handle unexpected conditions. Events could include 'Magnetic Pulse' (temporarily scrambles sensors), 'Low Gravity Zone' (alters physics), or 'Trap Malfunction' (disables all traps for 15 seconds). The active event is displayed on the HUD, and a new API function `bot.getCurrentEvent()` becomes available to the bot's script.
 
-### Bot Customization & Programming
+### Hamster-Bot Customization Bay (New in v7)
+A new 'Garage' section in the main menu where players can apply cosmetic items to their hamster-bots. Players can unlock new chassis paints, trail effects, and accessories (e.g., tiny propeller hats, racing stripes, small flags) by completing challenges or using in-game currency earned from successful heists. These customizations are purely visual and do not affect bot performance, allowing for player expression without impacting competitive balance.
 
-- **Chassis Design**: Customize your bot's physical chassis, affecting its weight, traction, and maneuverability.
-- **Block-Based & JavaScript Coding**: Program your bot's AI using an intuitive block-based interface or direct JavaScript.
-- **Sensor Suite**: Equip your bot with various sensors (e.g., proximity, vision) to gather environmental data.
-- **Utility Modules**: Utilize modules for specific actions like boosting, shielding, or interacting with the environment.
-
-### New in Version 6!
-
-- **Team Heists (2v2 Mode)**: Form a team and queue for matches against other pairs. This introduces cooperative strategy, allowing bots to be programmed to work together. The bot API is extended with `bot.getTeamId()` and `bot.isAlly(otherBot)`, enabling advanced tactics like one bot creating a diversion while the other retrieves the golden seed.
-- **Advanced Sensor & Utility Modules**: Deepen strategic programming with new high-skill modules:
-    - **Lidar Scanner**: A high-energy active module providing a detailed grid-based snapshot of the bot's immediate surroundings.
-    - **Hacking Module**: Interact with new 'Data Terminals' placed in the maze. A successful hack can yield rewards like disabling nearby traps or a small energy boost, creating valuable sub-objectives.
-- **Post-Match Replay & Event Log**: After a heist concludes, players can access a full replay of the match. During the replay, select any bot to view a timestamped event log, showing all API calls made, sensor data received, and custom `console.log()` messages from their script. This is an invaluable tool for debugging AI logic and understanding bot behavior.
+### Scrap & Crafting System (New in v7)
+Adds a simple economy around bot parts. After matches, players earn 'Scrap' based on performance (time, objectives, etc.). This Scrap can be used in a new 'Workshop' UI to craft single-use 'Consumable Modules' like a 'Nitro Boost' for a quick burst of speed or a 'Smokescreen' to temporarily obscure vision. This provides a way to spend earned currency and make strategic one-shot decisions before a match begins.
 
 ## Getting Started
 
+To get the HamsterHeist project up and running on your local machine, follow these steps:
+
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
-
--   [Node.js](https://nodejs.org/en/) (LTS version recommended)
--   [npm](https://www.npmjs.com/) (comes with Node.js)
+Make sure you have the following installed:
+*   Node.js (LTS version recommended)
+*   npm (comes with Node.js)
 
 ### Installation
 
@@ -60,28 +39,72 @@ Before you begin, ensure you have the following installed:
     npm install
     ```
 
-### Running the Game
+### Running the Application
 
-To start the HamsterHeist server and access the game in your browser:
+To start the HamsterHeist server, run the following command:
 
 ```bash
 npm start
 ```
 
-Once the server is running, open your web browser and navigate to `http://localhost:3000` (or the port indicated in your console).
+This will start the Node.js server, which serves the game's frontend and handles backend logic, including WebSocket connections for real-time gameplay.
 
-## Gameplay
+Once the server is running, open your web browser and navigate to `http://localhost:3000` (or the port indicated in your server console) to play HamsterHeist!
 
-(This section would typically contain more detailed information about how to play the game, objectives, etc.)
+## Project Structure
 
-## Bot Programming
-
-(This section would typically contain more detailed information about the bot API, available functions, and how to write bot scripts.)
+```
+.
+├── index.html              # Main HTML file for the game
+├── package.json            # Project dependencies and scripts
+├── README.md               # This file
+├── assets/                 # Game assets (images, sounds, level configs)
+│   └── levels/
+│       └── level_config.json # Configuration for maze levels
+├── backend/                # Server-side code (Node.js, Python for specific services)
+│   ├── heist_recorder.py   # Records heist simulations
+│   ├── matchmaking_service.py # Handles player matchmaking
+│   ├── server.js           # Main Node.js server entry point
+│   ├── api/                # Backend API routes
+│   ├── database/           # Database models and utilities
+│   ├── game/               # Game logic (engine, bot API, simulation)
+│   ├── game_engine/        # Maze generation and core game mechanics
+│   ├── models/             # Data models for bots and components
+│   └── services/           # Backend services (e.g., rewards)
+├── db/                     # Database migrations and schemas
+│   ├── migrations/         # Database migration scripts
+│   └── schemas/            # Database schemas
+├── frontend/               # Client-side code (JavaScript, React components)
+│   ├── game.js             # Core game client logic
+│   ├── input.js            # Input handling
+│   ├── physics.js          # Physics simulation (client-side)
+│   ├── renderer.js         # Game rendering
+│   ├── ui.js               # General UI logic
+│   ├── js/                 # JavaScript utilities
+│   └── src/                # React components and main application logic
+│       ├── api/            # Frontend API interactions
+│       ├── components/     # Reusable UI components (Lobby, Workshop, HUD)
+│       ├── game/           # Client-side game entities (Bot, EntityManager)
+│       ├── pages/          # Main application pages (Community Hub, Replay Viewer)
+│       ├── services/       # Frontend services
+│       └── views/          # Specific views (Customization Bay, Pre-Heist Lobby)
+├── node_modules/           # Installed Node.js modules
+├── static/                 # Static files (CSS, images)
+│   └── css/
+│       ├── game_hud.css    # Styles for the game HUD
+│       └── style.css       # General styles
+└── templates/              # HTML templates
+    └── community_hub.html  # Template for the community hub
+```
 
 ## Contributing
 
-We welcome contributions to HamsterHeist! Please see our `CONTRIBUTING.md` for guidelines on how to get started.
+We welcome contributions to HamsterHeist! Please see our `CONTRIBUTING.md` (if available) for guidelines on how to submit issues, propose features, and make pull requests.
 
 ## License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+This project is licensed under the ISC License. See the `LICENSE` file for details.
+
+## Contact
+
+For any questions or inquiries, please open an issue on the GitHub repository.
