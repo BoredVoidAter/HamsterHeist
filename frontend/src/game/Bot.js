@@ -1,5 +1,6 @@
 class Bot {
-    constructor(x, y, radius, speed) {
+    constructor(x, y, radius, speed, teamId = null) {
+        this.teamId = teamId;
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -29,6 +30,14 @@ class Bot {
             distance: distance,
             angle: angle
         };
+    }
+
+    getTeamId() {
+        return this.teamId;
+    }
+
+    isAlly(otherBot) {
+        return this.teamId !== null && this.teamId === otherBot.teamId;
     }
 }
 

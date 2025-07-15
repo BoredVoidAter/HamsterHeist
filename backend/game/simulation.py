@@ -1,7 +1,8 @@
 from backend.models.bot_components import Chassis, PowerCore
 
 class BotSimulation:
-    def __init__(self, chassis: Chassis, power_core: PowerCore):
+    def __init__(self, chassis: Chassis, power_core: PowerCore, team_id: str = None):
+        self.team_id = team_id
         self.chassis = chassis
         self.power_core = power_core
         self.current_energy = power_core.total_energy
