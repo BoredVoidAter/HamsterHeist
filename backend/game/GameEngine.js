@@ -8,6 +8,13 @@ class GameEngine {
     this.puddles = [];
     this.gameLoopInterval = null;
     this.lastTickTime = Date.now();
+    this.activeEvent = null;
+    this.eventTimer = null;
+    this.possibleEvents = [
+      { name: 'Magnetic Pulse', duration: 10000, effect: 'scramble_sensors' },
+      { name: 'Low Gravity Zone', duration: 15000, effect: 'low_gravity' },
+      { name: 'Trap Malfunction', duration: 15000, effect: 'disable_traps' }
+    ];
   }
 
   addBot(botId, bot) {
@@ -74,6 +81,30 @@ class GameEngine {
     this.io.emit('gameState', this.getGameState());
   }
 
+  startRandomEvent() {
+    if (this.activeEvent) return; // Only one event at a time
+
+    const eventIndex = Math.floor(Math.random() * this.possibleEvents.length);
+    this.activeEvent = this.possibleEvents[eventIndex];
+    console.log(`Event triggered: ${this.activeEvent.name}`);
+    this.io.emit('gameEvent', this.activeEvent);
+
+    // Set a timer to end the event
+    this.eventTimer = setTimeout(() => {
+      this.endActiveEvent();
+    }, this.activeEvent.duration);
+  }
+
+  endActiveEvent() {
+    if (!this.activeEvent) return;
+
+    console.log(`Event ended: ${this.activeEvent.name}`);
+    this.io.emit('gameEvent', null); // Notify clients event ended
+    this.activeEvent = null;
+    clearTimeout(this.eventTimer);
+    this.eventTimer = null;
+  }
+
   activateModule(bot, moduleType) {
     switch (moduleType) {
       case 'EMP Emitter':
@@ -134,7 +165,7 @@ class GameEngine {
     }
     const projectilesState = this.projectiles.map(p => p.getState());
     const puddlesState = this.puddles.map(p => p.getState());
-    return { bots: botsState, projectiles: projectilesState, puddles: puddlesState };
+    return { bots: botsState, projectiles: projectilesState, puddles: puddlesState, activeEvent: this.activeEvent };
   }
 }
 

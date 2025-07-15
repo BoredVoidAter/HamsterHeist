@@ -1,0 +1,95 @@
+.pre-heist-lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Press Start 2P', cursive;
+  color: #0f0;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+}
+
+h1 {
+  color: #00ff00;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+.consumables-section {
+  background-color: #2a2a2a;
+  border: 2px solid #00ff00;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+h2 {
+  color: #00ff00;
+  margin-top: 0;
+  border-bottom: 1px solid #00ff00;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.consumable-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.consumable-card {
+  background-color: #3a3a3a;
+  border: 1px solid #00cc00;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 204, 0, 0.3);
+}
+
+.consumable-card:hover {
+  background-color: #4a4a4a;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.consumable-card.selected {
+  background-color: #00ff00;
+  color: #1a1a1a;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+  transform: scale(1.05);
+}
+
+.consumable-card h3 {
+  color: #00ff00;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.consumable-card p {
+  color: #ccc;
+  font-size: 0.9em;
+}
+
+.start-heist-button {
+  background-color: #00cc00;
+  color: #1a1a1a;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
+  box-shadow: 0 0 20px rgba(0, 204, 0, 0.7);
+}
+
+.start-heist-button:hover {
+  background-color: #00ff00;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.9);
+}

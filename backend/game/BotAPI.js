@@ -52,6 +52,10 @@ class BotAPI {
       obstacles: []
     };
   }
+
+  getCurrentEvent() {
+    return this.gameEngine.activeEvent;
+  }
 }
 
 module.exports = BotAPI;
