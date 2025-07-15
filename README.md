@@ -1,44 +1,51 @@
 # HamsterHeist
 
-HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. Design your bot's physical chassis and write simple, block-based or JavaScript code to control its logic and sensors for navigating traps, other bots, and dynamic obstacles. The core challenge lies in creating an AI that can adapt to changing environments and outsmart other players' creations in real-time, multiplayer heists. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun.
+HamsterHeist is a competitive, physics-based web game where players build and program tiny, autonomous hamster-bots to sneak through a complex digital maze and steal a coveted golden sunflower seed. Design your bot's physical chassis and write simple, block-based or JavaScript code to control its logic and sensors for navigating traps, other bots, and dynamic obstacles. The core challenge lies in creating an AI that can adapt to changing environments and outsmart other players' creations in real-time, multiplayer heists. It's a hilarious blend of robotics simulation, coding puzzles, and chaotic multiplayer fun!
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Game](#running-the-game)
+- [Gameplay](#gameplay)
+- [Bot Programming](#bot-programming)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
 ### Core Gameplay
-*   **Physics-Based Movement**: Realistic physics simulation for bot movement, collisions, and interactions with the environment.
-*   **Autonomous Bots**: Program your bot's AI using a block-based visual editor or JavaScript to navigate the maze and achieve objectives.
-*   **Dynamic Mazes**: Procedurally generated or hand-crafted mazes with various obstacles, traps, and interactive elements.
-*   **Multiplayer Heists**: Compete against other players' bots in real-time to steal the golden sunflower seed.
 
-### Version 5 Updates
+- **Physics-Based Movement**: Realistic bot movement and interactions powered by a robust physics engine.
+- **Dynamic Mazes**: Procedurally generated mazes ensure every heist is a unique challenge.
+- **Strategic Obstacles**: Navigate traps, dynamic barriers, and environmental hazards.
+- **Multiplayer Heists**: Compete against other players' bots in real-time.
 
-*   **Advanced Chassis & Power Core System**:
-    *   Expanded bot customization by separating the chassis from the power source.
-    *   Players now select a 'Chassis' (defining weight, armor, and module slots) and a 'Power Core' (defining total energy and recharge rate).
-    *   Actions like moving, boosting, and using modules now consume energy. Bots must manage this new resource, and AIs can be programmed to conserve energy or go for powerful, high-consumption bursts.
-    *   The bot API is updated with `bot.getEnergy()` and `bot.getEnergyRechargeRate()`.
+### Bot Customization & Programming
 
-*   **Dynamic Maze Events**:
-    *   Introduces unpredictable, timed events that alter the maze during a heist.
-    *   Events like 'Laser Grid Activation', 'Magnetic Pulse', and 'Floor Friction Change' create temporary deadly barriers or alter environmental properties.
-    *   These events are announced shortly before they occur, giving adaptive AIs a chance to react.
-    *   The bot API is enhanced with `world.onEventAnnouncement(callback)` and `world.getActiveEvents()` to allow bots to programmatically respond to these dynamic changes.
+- **Chassis Design**: Customize your bot's physical chassis, affecting its weight, traction, and maneuverability.
+- **Block-Based & JavaScript Coding**: Program your bot's AI using an intuitive block-based interface or direct JavaScript.
+- **Sensor Suite**: Equip your bot with various sensors (e.g., proximity, vision) to gather environmental data.
+- **Utility Modules**: Utilize modules for specific actions like boosting, shielding, or interacting with the environment.
 
-*   **Bot Blueprint & Community Sharing**:
-    *   Allows players to save their complete bot designs (chassis, modules, and code) as a shareable 'Blueprint'.
-    *   Players can publish their Blueprints to a new 'Community Hub' where others can browse, rate, and import them into their own workshop.
-    *   This fosters a collaborative environment, helps new players learn effective strategies, and allows creators to gain recognition.
-    *   The system includes endpoints for publishing, searching, and fetching blueprints.
+### New in Version 6!
+
+- **Team Heists (2v2 Mode)**: Form a team and queue for matches against other pairs. This introduces cooperative strategy, allowing bots to be programmed to work together. The bot API is extended with `bot.getTeamId()` and `bot.isAlly(otherBot)`, enabling advanced tactics like one bot creating a diversion while the other retrieves the golden seed.
+- **Advanced Sensor & Utility Modules**: Deepen strategic programming with new high-skill modules:
+    - **Lidar Scanner**: A high-energy active module providing a detailed grid-based snapshot of the bot's immediate surroundings.
+    - **Hacking Module**: Interact with new 'Data Terminals' placed in the maze. A successful hack can yield rewards like disabling nearby traps or a small energy boost, creating valuable sub-objectives.
+- **Post-Match Replay & Event Log**: After a heist concludes, players can access a full replay of the match. During the replay, select any bot to view a timestamped event log, showing all API calls made, sensor data received, and custom `console.log()` messages from their script. This is an invaluable tool for debugging AI logic and understanding bot behavior.
 
 ## Getting Started
 
-To get HamsterHeist up and running on your local machine, follow these steps:
-
 ### Prerequisites
 
-*   Node.js (LTS version recommended)
-*   npm (comes with Node.js)
-*   Python 3.x (for backend components)
+Before you begin, ensure you have the following installed:
+
+-   [Node.js](https://nodejs.org/en/) (LTS version recommended)
+-   [npm](https://www.npmjs.com/) (comes with Node.js)
 
 ### Installation
 
@@ -48,51 +55,32 @@ To get HamsterHeist up and running on your local machine, follow these steps:
     cd HamsterHeist
     ```
 
-2.  **Install Node.js dependencies:**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
 
-3.  **Install Python dependencies:**
-    Navigate to the `backend` directory and install the required Python packages.
-    ```bash
-    cd backend
-    pip install -r requirements.txt # Assuming a requirements.txt exists or will be created
-    cd ..
-    ```
+### Running the Game
 
-### Running the Application
-
-To start both the frontend and backend servers, run the following command from the project root directory:
+To start the HamsterHeist server and access the game in your browser:
 
 ```bash
 npm start
 ```
 
-This command will typically:
-*   Start the Node.js backend server (e.g., `backend/server.js`).
-*   Serve the frontend application (e.g., `index.html` and associated assets).
+Once the server is running, open your web browser and navigate to `http://localhost:3000` (or the port indicated in your console).
 
-Once the servers are running, open your web browser and navigate to `http://localhost:3000` (or whatever port is indicated in your console output) to access the game.
+## Gameplay
 
-## Development
+(This section would typically contain more detailed information about how to play the game, objectives, etc.)
 
-### Project Structure
+## Bot Programming
 
-*   `frontend/`: Contains all client-side code (HTML, CSS, JavaScript for game logic, UI).
-*   `backend/`: Contains server-side code (Node.js for API, Python for game simulation/blueprints).
-*   `assets/`: Game assets like images, sounds, and level configurations.
-*   `db/`: Database migrations and schema definitions.
-*   `static/`: Static files served directly by the web server.
-*   `templates/`: HTML templates.
-
-### Running Tests
-
-(Instructions for running tests would go here, e.g., `npm test` for JavaScript tests, `pytest` for Python tests)
+(This section would typically contain more detailed information about the bot API, available functions, and how to write bot scripts.)
 
 ## Contributing
 
-We welcome contributions to HamsterHeist! Please see our `CONTRIBUTING.md` (if it exists) for guidelines on how to contribute.
+We welcome contributions to HamsterHeist! Please see our `CONTRIBUTING.md` for guidelines on how to get started.
 
 ## License
 
